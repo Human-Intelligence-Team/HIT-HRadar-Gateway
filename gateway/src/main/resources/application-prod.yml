@@ -6,26 +6,26 @@ spring:
     gateway:
       routes:
         - id: auth
-          uri: http://hr-auth:8081
+          uri: http://hr-auth:80
           predicates:
             - Path=/api/auth/**,/api/auth/password-reset/request
           filters:
             - StripPrefix=1
 
         - id: hr-public
-          uri: http://hr-backend:8082
+          uri: http://hr-backend:80
           predicates:
             - Path=/api/v1/company-applications/submit,/api/v1/health
           filters:
             - StripPrefix=2
 
         - id: hr-files
-          uri: http://hr-backend:8082
+          uri: http://hr-backend:80
           predicates:
             - Path=/api/v1/files/**
 
         - id: hr
-          uri: http://hr-backend:8082
+          uri: http://hr-backend:80
           predicates:
             - Path=/api/v1/**
           filters:
@@ -33,7 +33,7 @@ spring:
             - JwtAuthenticationFilter
 
         - id: notification-api
-          uri: http://hr-notification:8083
+          uri: http://hr-notification:80
           predicates:
             - Path=/api/notifications/**
           filters:
@@ -41,7 +41,7 @@ spring:
             - JwtAuthenticationFilter
 
         - id: chatbot
-          uri: http://hr-chatbot:8000
+          uri: http://hr-chatbot:80
           predicates:
             - Path=/api/chat/**
           filters:
@@ -53,6 +53,9 @@ jwt:
 
 cors:
   allowed-origins: ${CORS_ALLOWED_ORIGINS}
+  allowed-methods: ${CORS_ALLOWED_METHODS}
+  allowed-headers: ${CORS_ALLOWED_HEADERS}
+  allow-credentials: ${CORS_ALLOW_CREDENTIALS}
 
 internal:
   token: ${INTERNAL_TOKEN}

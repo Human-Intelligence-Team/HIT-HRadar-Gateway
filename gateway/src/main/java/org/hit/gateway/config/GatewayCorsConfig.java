@@ -13,18 +13,32 @@ public class GatewayCorsConfig {
     @Value("${cors.allowed-origins}")
     private String allowedOrigins;
 
+    @Value("${cors.allowed-methods}")
+    private String allowedMethods;
+
+    @Value("${cors.allowed-headers}")
+    private String allowedHeaders;
+
+    @Value("${cors.allow-credentials}")
+    private boolean allowCredentials;
+
     @Bean
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowCredentials(true);
+        config.setAllowCredentials(allowCredentials);
 
         for (String origin : allowedOrigins.split(",")) {
             config.addAllowedOrigin(origin.trim());
         }
 
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+        for (String method : allowedMethods.split(",")) {
+            config.addAllowedMethod(method.trim());
+        }
+
+        for (String header : allowedHeaders.split(",")) {
+            config.addAllowedHeader(header.trim());
+        }
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
