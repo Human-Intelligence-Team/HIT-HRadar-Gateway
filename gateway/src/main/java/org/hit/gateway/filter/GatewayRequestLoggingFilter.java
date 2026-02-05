@@ -32,13 +32,12 @@ public class GatewayRequestLoggingFilter implements GlobalFilter, Ordered {
             HttpStatusCode status = exchange.getResponse().getStatusCode();
 
             log.info(
-                    "[GATEWAY] {} {} status={} duration={}ms userId={} requestId={}",
+                    "[GATEWAY] {} {} status={} duration={}ms requestId={}",
                     method,
                     path,
                     status != null ? status.value() : "UNKNOWN",
                     duration,
-                    requestId
-            );
+                    requestId);
 
             log.info("METHOD={}", request.getMethod());
             log.info("AUTH={}", request.getHeaders().getFirst("Authorization"));
