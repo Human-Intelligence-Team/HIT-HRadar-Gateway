@@ -29,9 +29,6 @@ public class JwtAuthenticationFilter
         return (exchange, chain) -> {
 
             ServerHttpRequest request = exchange.getRequest();
-            if ("OPTIONS".equalsIgnoreCase(request.getMethodValue())) {
-                return chain.filter(exchange);
-            }
             String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
             String token;
